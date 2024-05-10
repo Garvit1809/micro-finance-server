@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 
 const globalErrorHandler = require("./controller/errorController");
 
-
+const userRouter = require("./routes/userRoutes");
 
 dotenv.config({ path: "./.env" });
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 
 // routes
-
+app.use("/api/v1/loan", userRouter);
 
 app.all("/", (req, res, next) => {
     res.send("hello, this is Micro Finance!!")

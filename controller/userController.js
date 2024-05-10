@@ -10,7 +10,6 @@ const signToken = (id) => {
     });
 };
 
-
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
 
@@ -31,7 +30,6 @@ const createSendToken = (user, statusCode, res) => {
         user,
     });
 };
-
 
 // creating a user (taking a loan)
 exports.createLoanRequest = catchAsync(async (req, res, next) => {
@@ -66,22 +64,17 @@ exports.createLoanRequest = catchAsync(async (req, res, next) => {
         return next(new AppError("Couldn't create user!", 500));
     }
 
-    // res.status(200).json({
-    //     status: "success",
-    //     newLoanRequest
-    // })
     createSendToken(newLoanRequest, 201, res);
 })
 
-// login (using phn number)
 exports.login = catchAsync(async (req, res, next) => {
     const { phone } = req.body;
+    console.log(phone);
 
     if (!phone) {
         return next(new AppError("Please provide the registered phone number!", 400));
     }
-    const user = await User.findOne({ phone });
-
+    const user = await User.findOne({ phone: phone });
     createSendToken(user, 200, res);
 });
 
@@ -131,6 +124,9 @@ exports.updateDetails = catchAsync(async (req, res, next) => {
 
     const updatedLoanRequest = await User.findByIdAndUpdate(userID, {
         bankname, bankAccountNumber, ifscCode
+    }, {
+        new: true,
+        runValidators: true,
     });
 
     if (!updatedLoanRequest) {
@@ -142,3 +138,21 @@ exports.updateDetails = catchAsync(async (req, res, next) => {
         updatedLoanRequest
     })
 });
+
+exports.getMyDetils = catchAsync(async (req, res, next) => {
+    const userID = req.user._id;
+
+    const user = await User.findById(userID).select("-totalRepayment -isProcessingFeePending -__v");
+
+    if (!user) {
+        return next(new AppError("User with this ID doesnt exit!! Contact support team!!", 400));
+    }
+
+    res.status(200).json({
+        status: "success",
+        user
+    });
+})
+
+
+// <---------------------------STAFF---------------------------->
