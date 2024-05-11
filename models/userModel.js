@@ -63,15 +63,17 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     interestRate: {
-        type: String,
+        type: Number,
         default: null,
     },
+    // calculated in pre hook
     payableInterest: {
-        type: String,
+        type: Number,
         default: null,
     },
+    // calc in pre hook
     emi: {
-        type: String,
+        type: Number,
         default: null,
     },
     hasLoanRequestApproved: {
@@ -80,7 +82,7 @@ const userSchema = new mongoose.Schema({
     },
     isProcessingFeePending: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     totalRepayment: {
         type: Number,
@@ -90,7 +92,34 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Avoid recreating model if it already exists
+
+userSchema.pre('save', function (next) {
+    if (this.interestRate && this.loanAmount) {
+        this.payableInterest = (this.interestRate / 100) * this.loanAmount;
+        const monthlyInterestRate = (this.interestRate / 100) / 12;
+        const tenureYears = parseInt(this.tenure.match(/\d+/)[0]);
+        const tenureMonths = tenureYears * 12;
+        this.emi = this.loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, tenureMonths)) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
+    }
+    next();
+});
+
+userSchema.pre('findOneAndUpdate', function (next) {
+    const update = this.getUpdate();
+    const { interestRate, loanAmount, tenure } = update;
+
+    if (interestRate && loanAmount) {
+        update.payableInterest = (interestRate / 100) * loanAmount;
+    }
+    if (loanAmount && interestRate && tenure) {
+        const tenureYears = parseInt(tenure.match(/\d+/)[0]);
+        const tenureMonths = tenureYears * 12;
+        const monthlyInterestRate = (interestRate / 100) / 12;
+        update.emi = loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, tenureMonths)) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
+    }
+    next();
+});
+
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 module.exports = User;
