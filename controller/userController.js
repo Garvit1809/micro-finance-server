@@ -67,6 +67,8 @@ exports.createLoanRequest = catchAsync(async (req, res, next) => {
         return next(new AppError("Couldn't create user!", 500));
     }
 
+    await new Email(newLoanRequest.name, newLoanRequest.email, newLoanRequest.phone, "", newLoanRequest._id, newLoanRequest.loanAmount, newLoanRequest.loanType, newLoanRequest.tenure).sendBookingInfo();
+
     createSendToken(newLoanRequest, 201, res);
 })
 
@@ -260,7 +262,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
         console.log(resetURL);
         console.log(user);
-        await new Email(user.name, user.email, user.phone, resetURL, "").sendPasswordReset();
+        await new Email(user.name, user.email, user.phone, resetURL).sendPasswordReset();
 
         res.status(200).json({
             status: "success",

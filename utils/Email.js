@@ -3,13 +3,16 @@ const pug = require("pug");
 require("dotenv").config();
 
 module.exports = class Email {
-    constructor(userName, userEmail, userPhn, url, password) {
+    constructor(userName, userEmail, userPhn, url, applicationID, loanAmount, loanType, tenure) {
         this.name = userName;
         this.to = userEmail;
         this.userPhn = userPhn,
             this.url = url;
-        this.password = password;
-        this.from = `Micro Finance India <evchargingstation.in@gmail.com>`;
+        this.applicationID = applicationID;
+        this.loanAmount = loanAmount;
+        this.loanType = loanType;
+        this.tenure = tenure;
+        this.from = `Micro Finance India <microfinanceloansindia@gmail.com>`;
     }
 
     newTransport() {
@@ -65,7 +68,10 @@ module.exports = class Email {
             firstName: this.name,
             url: this.url,
             subject: sub,
-            password: this.password
+            applicationID: this.applicationID,
+            loanAmount: this.loanAmount,
+            loanType: this.loanType,
+            tenure: this.tenure
         });
 
         const mailOptions = {

@@ -16,7 +16,8 @@ const app = express();
 const allowedOrigins = [
     'https://micro-finance-portal.netlify.app',
     'https://shimmering-begonia-efc2fa.netlify.app/',
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:3000"
 ];
 
 // CORS options delegate
