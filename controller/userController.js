@@ -258,7 +258,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     // 3) Send it to user's email
     try {
-        const resetURL = `http://localhost:5173/reset-password/${resetToken}`
+        // https://micro-finance-portal.netlify.app/forget-password
+        const resetURL = `https://micro-finance-portal.netlify.app/reset-password/${resetToken}`
 
         console.log(resetURL);
         console.log(user);
