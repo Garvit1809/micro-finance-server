@@ -83,7 +83,7 @@ const userSchema = new mongoose.Schema({
     },
     isProcessingFeePending: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     totalRepayment: {
         type: Number,
