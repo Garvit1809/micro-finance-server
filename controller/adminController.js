@@ -106,7 +106,7 @@ exports.updateSecondStep = catchAsync(async (req, res, next) => {
     }
 
     const updatedLoanRequest = await User.findByIdAndUpdate(loanID, {
-        isProcessingFeePending: true
+        isProcessingFeePending: false
     }, {
         new: true,
         runValidators: true,

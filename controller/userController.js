@@ -147,7 +147,7 @@ exports.updateDetails = catchAsync(async (req, res, next) => {
 exports.getMyDetils = catchAsync(async (req, res, next) => {
     const userID = req.user._id;
 
-    const user = await User.findById(userID).select("-totalRepayment -isProcessingFeePending -__v");
+    const user = await User.findById(userID).select("-totalRepayment -__v");
 
     if (!user) {
         return next(new AppError("User with this ID doesnt exit!! Contact support team!!", 400));
