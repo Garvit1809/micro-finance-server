@@ -96,7 +96,7 @@ module.exports = class Email {
     async sendBookingInfo() {
         await this.booking(
             "booking",
-            "We have received your EV Station Booking Request"
+            "We have received your Loan Application"
         );
     }
 
