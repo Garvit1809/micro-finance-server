@@ -14,8 +14,9 @@ const app = express();
 
 // List of allowed origins
 const allowedOrigins = [
-    'https://micro-finance-portal.netlify.app',
-    'https://shimmering-begonia-efc2fa.netlify.app/',
+    'https://micro-finance-por-tal.netlify.app',
+    'https://micro-finance-server.vercel.app/api/v1/staff/login',
+    'https://shimmering-begonia-efc2fa.netlify.app',
     "http://localhost:5173",
     "http://localhost:3000"
 ];
