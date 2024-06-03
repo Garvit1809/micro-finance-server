@@ -88,35 +88,75 @@ const userSchema = new mongoose.Schema({
     totalRepayment: {
         type: Number,
         default: 0,
-    }
+    },
+    tdsTax: {
+        value: {
+            type: Number,
+            default: 0,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    gstTax: {
+        value: {
+            type: Number,
+            default: 0,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    insurance: {
+        value: {
+            type: Number,
+            default: 0,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        }
+    },
 }, {
     timestamps: true
 });
 
 
-userSchema.pre('save', function (next) {
-    if (this.interestRate && this.loanAmount) {
-        this.payableInterest = (this.interestRate / 100) * this.loanAmount;
-        const monthlyInterestRate = (this.interestRate / 100) / 12;
-        const tenureYears = parseInt(this.tenure.match(/\d+/)[0]);
-        const tenureMonths = tenureYears * 12;
-        this.emi = this.loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, tenureMonths)) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
-    }
-    next();
-});
+// userSchema.pre('save', function (next) {
+//     if (this.interestRate && this.loanAmount) {
+//         this.payableInterest = (this.interestRate / 100) * this.loanAmount;
+//         const monthlyInterestRate = (this.interestRate / 100) / 12;
+//         const tenureYears = parseInt(this.tenure.match(/\d+/)[0]);
+//         const tenureMonths = tenureYears * 12;
+//         this.emi = (this.loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, tenureMonths))) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
+//     }
+//     next();
+// });
 
 userSchema.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate();
     const { interestRate, loanAmount, tenure } = update;
 
-    if (interestRate && loanAmount) {
-        update.payableInterest = (interestRate / 100) * loanAmount;
-    }
     if (loanAmount && interestRate && tenure) {
+        // total tenure months
         const tenureYears = parseInt(tenure.match(/\d+/)[0]);
         const tenureMonths = tenureYears * 12;
-        const monthlyInterestRate = (interestRate / 100) / 12;
-        update.emi = loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, tenureMonths)) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
+
+        // monthly intrest
+        const monthlyInterestRate = interestRate / 1200;
+
+        console.log(parseFloat(loanAmount));
+        console.log((Math.pow(1 + monthlyInterestRate, tenureMonths)));
+
+        let updatedEMi = (parseFloat(loanAmount) * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, tenureMonths))) / (Math.pow(1 + monthlyInterestRate, tenureMonths) - 1);
+        // emi
+        update.emi = parseInt(updatedEMi, 10);
+
+        const totalAmountToBePaid = updatedEMi * tenureMonths;
+        const interestToBePaid = totalAmountToBePaid - parseFloat(loanAmount);
+        update.payableInterest = Math.ceil(interestToBePaid);
     }
     next();
 });
