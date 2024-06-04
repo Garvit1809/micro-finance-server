@@ -119,6 +119,22 @@ const userSchema = new mongoose.Schema({
             default: false,
         }
     },
+    approvalLetterLink: {
+        type: String,
+        default: null
+    },
+    tdsInvoice: {
+        type: String,
+        default: null,
+    },
+    gstInvoice: {
+        type: String,
+        default: null,
+    },
+    insuranceInvoice: {
+        type: String,
+        default: null,
+    },
 }, {
     timestamps: true
 });

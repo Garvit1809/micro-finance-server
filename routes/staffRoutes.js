@@ -16,6 +16,12 @@ router.get("/request/:loanid", staffController.getOneLoanRequest);
 router.patch("/request/:loanid", staffController.updateBooking);
 router.patch("/request/:loanid/step-1", staffController.updateFirstStep);
 router.patch("/request/:loanid/step-2", staffController.updateSecondStep);
+router.patch("/request/:loanid/tds-details", staffController.updateTDSDetails);
+router.patch("/request/:loanid/tds-invoice", staffController.updateTDSInvoice);
+router.patch("/request/:loanid/gst-details", staffController.updateGSTDetails);
+router.patch("/request/:loanid/gst-invoice", staffController.updateGSTInvoice);
+router.patch("/request/:loanid/insurance-details", staffController.updateInsuranceDetails);
+router.patch("/request/:loanid/insurance-invoice", staffController.updateInsuranceInvoice);
 
 router.get("/members", staffController.getAllStaff);
 
