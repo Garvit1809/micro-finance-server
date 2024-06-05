@@ -119,6 +119,36 @@ const userSchema = new mongoose.Schema({
             default: false,
         }
     },
+    noc: {
+        value: {
+            type: Number,
+            default: 0,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    rbiHold: {
+        value: {
+            type: Number,
+            default: 0,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    uniqueCodeGenerate: {
+        value: {
+            type: Number,
+            default: 0,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        }
+    },
     approvalLetterLink: {
         type: String,
         default: null
@@ -135,6 +165,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
+    nocInvoice: {
+        type: String,
+        default: null,
+    },
+    rbiHoldInvoice: {
+        type: String,
+        default: null,
+    },
+    uniqueCodeGenerateInvoice: {
+        type: String,
+        default: null,
+    }
 }, {
     timestamps: true
 });

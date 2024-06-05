@@ -362,3 +362,224 @@ exports.updateInsuranceInvoice = catchAsync(async (req, res, next) => {
     });
 
 });
+
+// updating noc
+// uploading noc invoice
+exports.updateNOCDetails = catchAsync(async (req, res, next) => {
+    const { amt, status } = req.body;
+    const bookingID = req.params.loanid;
+
+    if (amt === undefined || status === undefined) {
+        return next(new AppError("Please provide sufficient info!", 401));
+    }
+
+    // Find the user by ID and update the TDS tax values
+    const updatedBooking = await User.findByIdAndUpdate(
+        bookingID,
+        {
+            $set: {
+                'noc.value': amt,
+                'noc.status': status
+            }
+        },
+        {
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // If the user is not found, throw an error
+    if (!updatedBooking) {
+        return next(new AppError('No booking found with that ID', 404));
+    }
+
+    // Send the updated booking details as a response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            booking: updatedBooking
+        }
+    });
+});
+
+exports.updateNOCInvoice = catchAsync(async (req, res, next) => {
+    const { invoiceLink } = req.body;
+    const bookingID = req.params.loanid;
+
+    if (invoiceLink === undefined) {
+        return next(new AppError("Please provide sufficient info!", 401));
+    }
+
+    // Find the user by ID and update the TDS tax values
+    const updatedBooking = await User.findByIdAndUpdate(
+        bookingID,
+        {
+            nocInvoice: invoiceLink
+        },
+        {
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // If the user is not found, throw an error
+    if (!updatedBooking) {
+        return next(new AppError('No booking found with that ID', 404));
+    }
+
+    // Send the updated booking details as a response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            booking: updatedBooking
+        }
+    });
+});
+
+
+// updating rbiHold
+// uploading rbiHold invoice
+exports.updateRBIHoldDetails = catchAsync(async (req, res, next) => {
+    const { amt, status } = req.body;
+    const bookingID = req.params.loanid;
+
+    if (amt === undefined || status === undefined) {
+        return next(new AppError("Please provide sufficient info!", 401));
+    }
+
+    // Find the user by ID and update the TDS tax values
+    const updatedBooking = await User.findByIdAndUpdate(
+        bookingID,
+        {
+            $set: {
+                'rbiHold.value': amt,
+                'rbiHold.status': status
+            }
+        },
+        {
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // If the user is not found, throw an error
+    if (!updatedBooking) {
+        return next(new AppError('No booking found with that ID', 404));
+    }
+
+    // Send the updated booking details as a response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            booking: updatedBooking
+        }
+    });
+});
+
+exports.updateRBIHoldInvoice = catchAsync(async (req, res, next) => {
+    const { invoiceLink } = req.body;
+    const bookingID = req.params.loanid;
+
+    if (invoiceLink === undefined) {
+        return next(new AppError("Please provide sufficient info!", 401));
+    }
+
+    // Find the user by ID and update the TDS tax values
+    const updatedBooking = await User.findByIdAndUpdate(
+        bookingID,
+        {
+            rbiHoldInvoice: invoiceLink
+        },
+        {
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // If the user is not found, throw an error
+    if (!updatedBooking) {
+        return next(new AppError('No booking found with that ID', 404));
+    }
+
+    // Send the updated booking details as a response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            booking: updatedBooking
+        }
+    });
+});
+
+
+// updating Unique Code Generate
+// uploading uniqueCodeGenerate invoice
+exports.updateUniqueCodeGenerateDetails = catchAsync(async (req, res, next) => {
+    const { amt, status } = req.body;
+    const bookingID = req.params.loanid;
+
+    if (amt === undefined || status === undefined) {
+        return next(new AppError("Please provide sufficient info!", 401));
+    }
+
+    // Find the user by ID and update the TDS tax values
+    const updatedBooking = await User.findByIdAndUpdate(
+        bookingID,
+        {
+            $set: {
+                'uniqueCodeGenerate.value': amt,
+                'uniqueCodeGenerate.status': status
+            }
+        },
+        {
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // If the user is not found, throw an error
+    if (!updatedBooking) {
+        return next(new AppError('No booking found with that ID', 404));
+    }
+
+    // Send the updated booking details as a response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            booking: updatedBooking
+        }
+    });
+});
+
+exports.updateUniqueCodeGenerateInvoice = catchAsync(async (req, res, next) => {
+    const { invoiceLink } = req.body;
+    const bookingID = req.params.loanid;
+
+    if (invoiceLink === undefined) {
+        return next(new AppError("Please provide sufficient info!", 401));
+    }
+
+    // Find the user by ID and update the TDS tax values
+    const updatedBooking = await User.findByIdAndUpdate(
+        bookingID,
+        {
+            uniqueCodeGenerateInvoice: invoiceLink
+        },
+        {
+            new: true, // Return the updated document
+            runValidators: true // Run schema validators
+        }
+    );
+
+    // If the user is not found, throw an error
+    if (!updatedBooking) {
+        return next(new AppError('No booking found with that ID', 404));
+    }
+
+    // Send the updated booking details as a response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            booking: updatedBooking
+        }
+    });
+});
