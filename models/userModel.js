@@ -1,6 +1,11 @@
 const { default: mongoose } = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+    applicationID: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     name: {
         type: String,
         required: true,

@@ -34,6 +34,14 @@ const createSendToken = (user, statusCode, res) => {
     });
 };
 
+const generateUniqueCode = async () => {
+    const year = new Date().getFullYear();
+    const prefix = "MFI";
+    const count = await User.countDocuments();
+    const uniqueNumber = count + 1; // Incremental number based on user count
+    return `${prefix}${year}${uniqueNumber.toString().padStart(4, '0')}`;
+};
+
 // creating a user (taking a loan)
 exports.createLoanRequest = catchAsync(async (req, res, next) => {
     const {
@@ -52,6 +60,8 @@ exports.createLoanRequest = catchAsync(async (req, res, next) => {
         return next(new AppError("Please provide all required information for creating an account!", 400));
     }
 
+    const applicationId = await generateUniqueCode();
+
     const newLoanRequest = await User.create({
         name,
         email,
@@ -61,6 +71,7 @@ exports.createLoanRequest = catchAsync(async (req, res, next) => {
         loanAmount,
         tenure,
         loanType,
+        applicationID: applicationId,
     });
 
     if (!newLoanRequest) {
