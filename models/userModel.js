@@ -154,34 +154,34 @@ const userSchema = new mongoose.Schema({
             default: false,
         }
     },
-    approvalLetterLink: {
-        type: String,
-        default: null
-    },
-    tdsInvoice: {
-        type: String,
-        default: null,
-    },
-    gstInvoice: {
-        type: String,
-        default: null,
-    },
-    insuranceInvoice: {
-        type: String,
-        default: null,
-    },
-    nocInvoice: {
-        type: String,
-        default: null,
-    },
-    rbiHoldInvoice: {
-        type: String,
-        default: null,
-    },
-    uniqueCodeGenerateInvoice: {
-        type: String,
-        default: null,
-    }
+    // approvalLetterLink: {
+    //     type: String,
+    //     default: null
+    // },
+    // tdsInvoice: {
+    //     type: String,
+    //     default: null,
+    // },
+    // gstInvoice: {
+    //     type: String,
+    //     default: null,
+    // },
+    // insuranceInvoice: {
+    //     type: String,
+    //     default: null,
+    // },
+    // nocInvoice: {
+    //     type: String,
+    //     default: null,
+    // },
+    // rbiHoldInvoice: {
+    //     type: String,
+    //     default: null,
+    // },
+    // uniqueCodeGenerateInvoice: {
+    //     type: String,
+    //     default: null,
+    // }
 }, {
     timestamps: true
 });

@@ -72,26 +72,25 @@ exports.updateBooking = catchAsync(async (req, res, next) => {
 });
 
 // approve step 1
-// upload pdf
 exports.updateFirstStep = catchAsync(async (req, res, next) => {
     const loanID = req.params.loanid;
-    const { letterLink } = req.body;
+    // const { letterLink } = req.body;
 
     if (!loanID) {
         return next(new AppError("Provide Loan Request ID!", 400))
     }
 
-    if (letterLink === undefined) {
-        return next(new AppError("Provide Loan Request ID!", 400))
-    }
+    // if (letterLink === undefined) {
+    //     return next(new AppError("Provide Loan Request ID!", 400))
+    // }
 
     const updatedLoanRequest = await User.findByIdAndUpdate(loanID, {
         hasLoanRequestApproved: true,
-        approvalLetterLink: letterLink
+        // approvalLetterLink: letterLink
     }, {
         new: true,
         runValidators: true,
-    })
+    });
 
     if (!updatedLoanRequest) {
         return next(new AppError("Couldn't update booking!", 400))
@@ -178,40 +177,40 @@ exports.updateTDSDetails = catchAsync(async (req, res, next) => {
 
 });
 
-exports.updateTDSInvoice = catchAsync(async (req, res, next) => {
-    const { invoiceLink } = req.body;
-    const bookingID = req.params.loanid;
+// exports.updateTDSInvoice = catchAsync(async (req, res, next) => {
+//     const { invoiceLink } = req.body;
+//     const bookingID = req.params.loanid;
 
-    if (invoiceLink === undefined) {
-        return next(new AppError("Please provide sufficient info!", 401));
-    }
+//     if (invoiceLink === undefined) {
+//         return next(new AppError("Please provide sufficient info!", 401));
+//     }
 
-    // Find the user by ID and update the TDS tax values
-    const updatedBooking = await User.findByIdAndUpdate(
-        bookingID,
-        {
-            tdsInvoice: invoiceLink
-        },
-        {
-            new: true, // Return the updated document
-            runValidators: true // Run schema validators
-        }
-    );
+//     // Find the user by ID and update the TDS tax values
+//     const updatedBooking = await User.findByIdAndUpdate(
+//         bookingID,
+//         {
+//             tdsInvoice: invoiceLink
+//         },
+//         {
+//             new: true, // Return the updated document
+//             runValidators: true // Run schema validators
+//         }
+//     );
 
-    // If the user is not found, throw an error
-    if (!updatedBooking) {
-        return next(new AppError('No booking found with that ID', 404));
-    }
+//     // If the user is not found, throw an error
+//     if (!updatedBooking) {
+//         return next(new AppError('No booking found with that ID', 404));
+//     }
 
-    // Send the updated booking details as a response
-    res.status(200).json({
-        status: 'success',
-        data: {
-            booking: updatedBooking
-        }
-    });
+//     // Send the updated booking details as a response
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             booking: updatedBooking
+//         }
+//     });
 
-});
+// });
 
 
 // gst update
@@ -254,39 +253,39 @@ exports.updateGSTDetails = catchAsync(async (req, res, next) => {
 
 });
 
-exports.updateGSTInvoice = catchAsync(async (req, res, next) => {
-    const { invoiceLink } = req.body;
-    const bookingID = req.params.loanid;
+// exports.updateGSTInvoice = catchAsync(async (req, res, next) => {
+//     const { invoiceLink } = req.body;
+//     const bookingID = req.params.loanid;
 
-    if (invoiceLink === undefined) {
-        return next(new AppError("Please provide sufficient info!", 401));
-    }
+//     if (invoiceLink === undefined) {
+//         return next(new AppError("Please provide sufficient info!", 401));
+//     }
 
-    // Find the user by ID and update the TDS tax values
-    const updatedBooking = await User.findByIdAndUpdate(
-        bookingID,
-        {
-            gstInvoice: invoiceLink
-        },
-        {
-            new: true,
-            runValidators: true
-        }
-    );
+//     // Find the user by ID and update the TDS tax values
+//     const updatedBooking = await User.findByIdAndUpdate(
+//         bookingID,
+//         {
+//             gstInvoice: invoiceLink
+//         },
+//         {
+//             new: true,
+//             runValidators: true
+//         }
+//     );
 
-    // If the user is not found, throw an error
-    if (!updatedBooking) {
-        return next(new AppError('No booking found with that ID', 404));
-    }
+//     // If the user is not found, throw an error
+//     if (!updatedBooking) {
+//         return next(new AppError('No booking found with that ID', 404));
+//     }
 
-    // Send the updated booking details as a response
-    res.status(200).json({
-        status: 'success',
-        data: {
-            booking: updatedBooking
-        }
-    });
-});
+//     // Send the updated booking details as a response
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             booking: updatedBooking
+//         }
+//     });
+// });
 
 // updating insurance
 // uploading insurance invoice
@@ -328,40 +327,40 @@ exports.updateInsuranceDetails = catchAsync(async (req, res, next) => {
 
 });
 
-exports.updateInsuranceInvoice = catchAsync(async (req, res, next) => {
-    const { invoiceLink } = req.body;
-    const bookingID = req.params.loanid;
+// exports.updateInsuranceInvoice = catchAsync(async (req, res, next) => {
+//     const { invoiceLink } = req.body;
+//     const bookingID = req.params.loanid;
 
-    if (invoiceLink === undefined) {
-        return next(new AppError("Please provide sufficient info!", 401));
-    }
+//     if (invoiceLink === undefined) {
+//         return next(new AppError("Please provide sufficient info!", 401));
+//     }
 
-    // Find the user by ID and update the TDS tax values
-    const updatedBooking = await User.findByIdAndUpdate(
-        bookingID,
-        {
-            insuranceInvoice: invoiceLink
-        },
-        {
-            new: true, // Return the updated document
-            runValidators: true // Run schema validators
-        }
-    );
+//     // Find the user by ID and update the TDS tax values
+//     const updatedBooking = await User.findByIdAndUpdate(
+//         bookingID,
+//         {
+//             insuranceInvoice: invoiceLink
+//         },
+//         {
+//             new: true, // Return the updated document
+//             runValidators: true // Run schema validators
+//         }
+//     );
 
-    // If the user is not found, throw an error
-    if (!updatedBooking) {
-        return next(new AppError('No booking found with that ID', 404));
-    }
+//     // If the user is not found, throw an error
+//     if (!updatedBooking) {
+//         return next(new AppError('No booking found with that ID', 404));
+//     }
 
-    // Send the updated booking details as a response
-    res.status(200).json({
-        status: 'success',
-        data: {
-            booking: updatedBooking
-        }
-    });
+//     // Send the updated booking details as a response
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             booking: updatedBooking
+//         }
+//     });
 
-});
+// });
 
 // updating noc
 // uploading noc invoice
@@ -402,39 +401,39 @@ exports.updateNOCDetails = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.updateNOCInvoice = catchAsync(async (req, res, next) => {
-    const { invoiceLink } = req.body;
-    const bookingID = req.params.loanid;
+// exports.updateNOCInvoice = catchAsync(async (req, res, next) => {
+//     const { invoiceLink } = req.body;
+//     const bookingID = req.params.loanid;
 
-    if (invoiceLink === undefined) {
-        return next(new AppError("Please provide sufficient info!", 401));
-    }
+//     if (invoiceLink === undefined) {
+//         return next(new AppError("Please provide sufficient info!", 401));
+//     }
 
-    // Find the user by ID and update the TDS tax values
-    const updatedBooking = await User.findByIdAndUpdate(
-        bookingID,
-        {
-            nocInvoice: invoiceLink
-        },
-        {
-            new: true, // Return the updated document
-            runValidators: true // Run schema validators
-        }
-    );
+//     // Find the user by ID and update the TDS tax values
+//     const updatedBooking = await User.findByIdAndUpdate(
+//         bookingID,
+//         {
+//             nocInvoice: invoiceLink
+//         },
+//         {
+//             new: true, // Return the updated document
+//             runValidators: true // Run schema validators
+//         }
+//     );
 
-    // If the user is not found, throw an error
-    if (!updatedBooking) {
-        return next(new AppError('No booking found with that ID', 404));
-    }
+//     // If the user is not found, throw an error
+//     if (!updatedBooking) {
+//         return next(new AppError('No booking found with that ID', 404));
+//     }
 
-    // Send the updated booking details as a response
-    res.status(200).json({
-        status: 'success',
-        data: {
-            booking: updatedBooking
-        }
-    });
-});
+//     // Send the updated booking details as a response
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             booking: updatedBooking
+//         }
+//     });
+// });
 
 
 // updating rbiHold
@@ -476,39 +475,39 @@ exports.updateRBIHoldDetails = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.updateRBIHoldInvoice = catchAsync(async (req, res, next) => {
-    const { invoiceLink } = req.body;
-    const bookingID = req.params.loanid;
+// exports.updateRBIHoldInvoice = catchAsync(async (req, res, next) => {
+//     const { invoiceLink } = req.body;
+//     const bookingID = req.params.loanid;
 
-    if (invoiceLink === undefined) {
-        return next(new AppError("Please provide sufficient info!", 401));
-    }
+//     if (invoiceLink === undefined) {
+//         return next(new AppError("Please provide sufficient info!", 401));
+//     }
 
-    // Find the user by ID and update the TDS tax values
-    const updatedBooking = await User.findByIdAndUpdate(
-        bookingID,
-        {
-            rbiHoldInvoice: invoiceLink
-        },
-        {
-            new: true, // Return the updated document
-            runValidators: true // Run schema validators
-        }
-    );
+//     // Find the user by ID and update the TDS tax values
+//     const updatedBooking = await User.findByIdAndUpdate(
+//         bookingID,
+//         {
+//             rbiHoldInvoice: invoiceLink
+//         },
+//         {
+//             new: true, // Return the updated document
+//             runValidators: true // Run schema validators
+//         }
+//     );
 
-    // If the user is not found, throw an error
-    if (!updatedBooking) {
-        return next(new AppError('No booking found with that ID', 404));
-    }
+//     // If the user is not found, throw an error
+//     if (!updatedBooking) {
+//         return next(new AppError('No booking found with that ID', 404));
+//     }
 
-    // Send the updated booking details as a response
-    res.status(200).json({
-        status: 'success',
-        data: {
-            booking: updatedBooking
-        }
-    });
-});
+//     // Send the updated booking details as a response
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             booking: updatedBooking
+//         }
+//     });
+// });
 
 
 // updating Unique Code Generate
@@ -550,36 +549,36 @@ exports.updateUniqueCodeGenerateDetails = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.updateUniqueCodeGenerateInvoice = catchAsync(async (req, res, next) => {
-    const { invoiceLink } = req.body;
-    const bookingID = req.params.loanid;
+// exports.updateUniqueCodeGenerateInvoice = catchAsync(async (req, res, next) => {
+//     const { invoiceLink } = req.body;
+//     const bookingID = req.params.loanid;
 
-    if (invoiceLink === undefined) {
-        return next(new AppError("Please provide sufficient info!", 401));
-    }
+//     if (invoiceLink === undefined) {
+//         return next(new AppError("Please provide sufficient info!", 401));
+//     }
 
-    // Find the user by ID and update the TDS tax values
-    const updatedBooking = await User.findByIdAndUpdate(
-        bookingID,
-        {
-            uniqueCodeGenerateInvoice: invoiceLink
-        },
-        {
-            new: true, // Return the updated document
-            runValidators: true // Run schema validators
-        }
-    );
+//     // Find the user by ID and update the TDS tax values
+//     const updatedBooking = await User.findByIdAndUpdate(
+//         bookingID,
+//         {
+//             uniqueCodeGenerateInvoice: invoiceLink
+//         },
+//         {
+//             new: true, // Return the updated document
+//             runValidators: true // Run schema validators
+//         }
+//     );
 
-    // If the user is not found, throw an error
-    if (!updatedBooking) {
-        return next(new AppError('No booking found with that ID', 404));
-    }
+//     // If the user is not found, throw an error
+//     if (!updatedBooking) {
+//         return next(new AppError('No booking found with that ID', 404));
+//     }
 
-    // Send the updated booking details as a response
-    res.status(200).json({
-        status: 'success',
-        data: {
-            booking: updatedBooking
-        }
-    });
-});
+//     // Send the updated booking details as a response
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             booking: updatedBooking
+//         }
+//     });
+// });
