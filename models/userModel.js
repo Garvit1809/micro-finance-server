@@ -154,6 +154,22 @@ const userSchema = new mongoose.Schema({
             default: false,
         }
     },
+    paidOnBankName: {
+        type: String,
+        default: null,
+    },
+    paidOnAccountNumber: {
+        type: String,
+        default: null,
+    },
+    paidOnIFSCCode: {
+        type: String,
+        default: null,
+    },
+    isCurrentAccount: {
+        type: Boolean,
+        default: true,
+    }
     // approvalLetterLink: {
     //     type: String,
     //     default: null

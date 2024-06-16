@@ -34,7 +34,7 @@ exports.getOneLoanRequest = catchAsync(async (req, res, next) => {
 
 // update rquest details
 exports.updateBooking = catchAsync(async (req, res, next) => {
-    const { name, email, phone, whatsappNumber, aadharCardNumber, panCardNumber, bankname, bankAccountNumber, ifscCode, loanAmount, tenure, loanType, interestRate, totalRepayment } = req.body;
+    const { name, email, phone, whatsappNumber, aadharCardNumber, panCardNumber, bankname, bankAccountNumber, ifscCode, loanAmount, tenure, loanType, interestRate, totalRepayment, paidOnBankName, paidOnAccountNumber, paidOnIFSCCode, isCurrentAccount } = req.body;
     const loanID = req.params.loanid;
 
     if (!loanID) {
@@ -55,7 +55,11 @@ exports.updateBooking = catchAsync(async (req, res, next) => {
         tenure,
         loanType,
         interestRate,
-        totalRepayment
+        totalRepayment,
+        paidOnBankName,
+        paidOnAccountNumber,
+        paidOnIFSCCode,
+        isCurrentAccount
     }, {
         new: true,
         runValidators: true,
